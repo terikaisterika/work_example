@@ -1,7 +1,6 @@
 import { Page , Locator, expect} from "@playwright/test"
 import { allure } from "allure-playwright";
 import { CanvasComponent } from "../components/canvas_component";
-import { error } from "console";
 /**
  * Базовый элемент определяет некоторые действия и требования
  * К примеру наследники должны дать имя элементу для allure
@@ -105,7 +104,7 @@ export abstract class BaseElement {
       const result = button === null?false: button.clientHeight > 0;
       return result;
     }, locatorForSearch);
-    expect(boolCondition, `ClientHeight элемента: ${this.NameElement} равна 0`).toBeTruthy();
+    await expect(boolCondition, `ClientHeight элемента: ${this.NameElement} равна 0`).toBeTruthy();
     })
   }
   /**
@@ -114,8 +113,6 @@ export abstract class BaseElement {
    * @param innerElement элемент, который должен находиться в текущем элементе
    */
   async getInnerElement(innerElement:Locator|string):Promise<Locator>{
-    //await allure.step(`Найти веб элемент в элементе ${this.NameElement} c локатором ${this.Locator}`, async ()=>{
-      return  this.WebElement.locator(innerElement);
-    //});
+      return this.WebElement.locator(innerElement)
   }
 }

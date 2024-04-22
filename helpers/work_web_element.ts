@@ -1,5 +1,3 @@
-import { allure } from "allure-playwright";
-import { Button } from "../elements/button";
 import { IDataCalculation } from "../data_tests/data_calculations";
 import { IButtons } from "../components/calculator";
 import { Calculator } from "../components/calculator";

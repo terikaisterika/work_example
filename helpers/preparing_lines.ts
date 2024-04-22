@@ -1,3 +1,4 @@
+import { Locator } from "@playwright/test";
 import { IDataCalculation } from "../data_tests/data_calculations";
 /**
  * Подготавливает строку описания тестов 
@@ -12,3 +13,4 @@ export function getDescriptionParameterizedTests(data:IDataCalculation){
   ${data.firstNumber.join('')} ${data.firstOperation} ${data.secondNumber.join('')} 
   ${partDescription} = ${data.result}`
 }
+
