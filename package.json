@@ -6,8 +6,7 @@
   "scripts": {
     "debug": "npx playwright test --debug",
     "test": "npx playwright test",
-    "report": "npx allure serve allure-results",
-    "trace": "npx playwright show-trace"
+    "report": "npx allure serve allure-results"
   },
   "keywords": [],
   "author": "",
