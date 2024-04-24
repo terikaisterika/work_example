@@ -27,7 +27,9 @@ export default defineConfig({
     baseURL: 'https://sendsay-calculator.netlify.app',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on'
+    trace: 'on',
+    testIdAttribute: 'data-cy',
+
   },
 
   /* Configure projects for major browsers */

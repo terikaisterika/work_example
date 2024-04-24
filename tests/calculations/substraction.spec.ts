@@ -1,4 +1,5 @@
-import {test , expect, Page, Locator} from '@playwright/test'
+//import {test , expect, Page, Locator} from '@playwright/test'
+import {test, expect} from '../../utils/calculatorFixture'
 import { Calculator } from '../../components/calculator'
 import { buttonValueComparator, DataCalculations, IDataCalculation } from '../../data_tests/data_calculations'
 import { performСalculations } from '../../helpers/work_web_element'
