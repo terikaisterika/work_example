@@ -1,12 +1,13 @@
-import {test , expect, Page, Locator} from '@playwright/test'
+//import {test , expect, Page, Locator} from '@playwright/test'
+import {test,expect} from '../../utils/calculatorFixture'
 import { Calculator } from '../../components/calculator'
 import { buttonValueComparator, DataCalculations, IDataCalculation } from '../../data_tests/data_calculations'
 import { performСalculations } from '../../helpers/work_web_element'
 import { getDescriptionParameterizedTests } from '../../helpers/preparing_lines'
 test.describe('r#10 Проверка расчетов умножения', async()=>{
-  test.beforeEach(async({page})=>{
+  test.beforeEach(async({page, calculator})=>{
     await page.goto('/')
-    const calculator = new Calculator(page);
+    //const calculator = new Calculator(page);
     await calculator.buildCalculator();  
   })
   
