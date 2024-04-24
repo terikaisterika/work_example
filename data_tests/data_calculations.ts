@@ -39,7 +39,7 @@ export class DataCalculations{
     {firstNumber: ['9'], firstOperation: 'multiplication',secondNumber: ['0'], secondOperation:'no', thirdNumber: [], result: '0'},
     {firstNumber: ['7','0','0'], firstOperation: 'multiplication',secondNumber: ['1','0'], secondOperation:'no', thirdNumber: [], result: '7000'},
     {firstNumber: ['0',',','1'], firstOperation: 'multiplication',secondNumber: ['2'], secondOperation:'no', thirdNumber: [], result: '0,2'},
-    {firstNumber: ['2'], firstOperation: 'multiplication',secondNumber: ['2'], secondOperation:'multiplication', thirdNumber: ['2'], result: '8'},
+    {firstNumber: ['2'], firstOperation: 'multiplication',secondNumber: ['2'], secondOperation:'multiplication', thirdNumber: ['2'], result: '8'}
   ]
   static substraction:IDataCalculation[]=[
     {firstNumber: ['1','0'], firstOperation: 'substraction',secondNumber: ['5'], secondOperation:'no', thirdNumber: [], result: '5'},
@@ -51,8 +51,7 @@ export class DataCalculations{
     {firstNumber: ['0', ',','1'], firstOperation: 'addition', secondNumber: ['1',',','9'],secondOperation:'no', thirdNumber: [],result: '2'},
     {firstNumber: ['0', ',','7'], firstOperation: 'addition',secondNumber: ['2'], secondOperation:'no',thirdNumber: [], result: '2,7'},
     {firstNumber: ['3'], firstOperation: 'addition', secondNumber: ['2'], secondOperation:'addition',thirdNumber: ['1'], result: '6'}, 
-    {firstNumber: ['3'],firstOperation: 'addition', secondNumber: ['2'], secondOperation:'addition', thirdNumber: [], result: '5'},
-    {firstNumber: ['1','0','0','1'],firstOperation: 'addition', secondNumber: ['1','0','0','1'], secondOperation:'addition', thirdNumber: [], result: '2002'}
+    {firstNumber: ['1','0','0','1'],firstOperation: 'addition', secondNumber: ['1','0','0','1'], secondOperation:'no', thirdNumber: [], result: '2002'}
   ]
   
 }

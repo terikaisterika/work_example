@@ -142,5 +142,4 @@ test.describe('Проверка перемещений', async()=>{
     await expect(calculator.runtimeButton.WebElement).toHaveClass(/active/)
     await calculator.sidebar.isHidden();
   })
-  
 })
