@@ -1,22 +1,16 @@
-//import {test , expect, Page, Locator} from '@playwright/test'
 import {test} from '../../utils/calculatorFixture'
-import { Calculator } from '../../components/calculator'
-import { buttonValueComparator, DataCalculations, IDataCalculation } from '../../data_tests/data_calculations'
-import { performСalculations } from '../../helpers/work_web_element'
+import {  DataCalculations} from '../../data_tests/data_calculations'
 import { getDescriptionParameterizedTests } from '../../helpers/preparing_lines'
-import { allure } from 'allure-playwright'
 test.describe('r#12 Проверка расчетов сложения', async()=>{
-  test.beforeEach(async({page, calculator})=>{
-    await page.goto('/')
-    //const calculator = new Calculator(page);
+  test.beforeEach(async({calculator})=>{
+    await calculator.visit()
     await calculator.buildCalculator();  
   })
   for (const data of DataCalculations.addition){
     let description = getDescriptionParameterizedTests(data);
-    test(description, async ({page})=>{
-      const calculator = new Calculator(page);
+    test(description, async ({ calculator})=>{
       await calculator.sidebar.isHidden()
-      await performСalculations(calculator, data, description);
+      await calculator.performСalculations(data, description);
     })
   }
   

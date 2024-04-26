@@ -3,16 +3,13 @@ import { Calculator, MovableElementsType, } from '../components/calculator'
 import { allure } from 'allure-playwright'
 import { DataCalculations, IDataCalculation } from '../data_tests/data_calculations'
 import { getDescriptionParameterizedTests } from '../helpers/preparing_lines'
-import {  performСalculations } from '../helpers/work_web_element'
 
 test.describe('Проверка перемещений', async()=>{
-  test.beforeEach(async({page, calculator})=>{
-    await page.goto('/')
+  test.beforeEach(async({calculator})=>{
+    await calculator.visit();
   })
   
   test('r#2 r#3 Элемент возвращается по двойному клику в палитру', async ({calculator})=>{
-    //const calculator = new Calculator(page);
-
     await calculator.canvasEmptyDiv.isVisible();
     const listElements:MovableElementsType[] = ['buttonsBoxDiv']
     await calculator.addElementsOnCanvas(listElements)
@@ -24,8 +21,7 @@ test.describe('Проверка перемещений', async()=>{
   test(`r#4 После перехода на холст элемент на полотне не активный 
   Проверки: элемент после переноса в залоченном контейнере.
   залоченный контейнер 'position', 'relative',
-  перенесенный элемент с 'opacity', '0.5'`, async ({page, calculator})=>{
-    //const calculator = new Calculator(page);
+  перенесенный элемент с 'opacity', '0.5'`, async ({calculator})=>{
     await calculator.canvasEmptyDiv.isVisible();
     const listElements:MovableElementsType[] = ['buttonsBoxDiv']
     await calculator.addElementsOnCanvas(listElements)
@@ -35,8 +31,7 @@ test.describe('Проверка перемещений', async()=>{
     await expect(elementInSidebar).toHaveCSS('opacity', '0.5')
   })
   
-  test('Убрать все элементы с полотна canvas', async({page, calculator})=>{
-    //const calculator = new Calculator(page);
+  test('Убрать все элементы с полотна canvas', async({calculator})=>{
     const itemsDelete:MovableElementsType[] = ['operationBoxDiv', 'buttonsBoxDiv','submitBoxDiv','displayBoxDiv'];
     await calculator.addElementsOnCanvas(itemsDelete)
     await calculator.deleteElements(itemsDelete)
@@ -55,8 +50,7 @@ test.describe('Проверка перемещений', async()=>{
     await calculator.checkOrderInCanvas('display-box', 0);
   })
   test(`r#1 r#14 При любом порядке частей калькулятора на полотно расчет правильный.
-  Порядок: дисплей, кнопки операций, кнопки данных, кнопка '='`, async({page, calculator})=>{
-    //const calculator = new Calculator(page);
+  Порядок: дисплей, кнопки операций, кнопки данных, кнопка '='`, async({calculator})=>{
     const itemsDelete:MovableElementsType[] = ['displayBoxDiv','operationBoxDiv', 'buttonsBoxDiv','submitBoxDiv'];
     await calculator.addElementsOnCanvas(itemsDelete)
     await calculator.canvasEmptyDiv.isHidden()
@@ -66,11 +60,10 @@ test.describe('Проверка перемещений', async()=>{
     await calculator.runtimeButton.click();
     await expect(calculator.runtimeButton.WebElement).toHaveClass(/active/)
     await calculator.sidebar.isHidden();
-    await performСalculations(calculator, data, description);
+    await calculator.performСalculations(data, description);
   })
   test(`r#1 r#14 При любом порядке частей калькулятора на полотно расчет правильный.
-  Порядок: дисплей,кнопка '=', кнопки данных, кнопки операций`, async({page, calculator})=>{
-    //const calculator = new Calculator(page);
+  Порядок: дисплей,кнопка '=', кнопки данных, кнопки операций`, async({calculator})=>{
     const itemsDelete:MovableElementsType[] = ['displayBoxDiv','submitBoxDiv', 'buttonsBoxDiv', 'operationBoxDiv'];
     await calculator.addElementsOnCanvas(itemsDelete)
     await calculator.canvasEmptyDiv.isHidden()
@@ -80,12 +73,11 @@ test.describe('Проверка перемещений', async()=>{
     await calculator.runtimeButton.click();
     await expect(calculator.runtimeButton.WebElement).toHaveClass(/active/)
     await calculator.sidebar.isHidden();
-    await performСalculations(calculator, data, description);
+    await calculator.performСalculations(data, description);
   })
   test(`r#5 Полный путь. Проверить активность кнопки конструктора, собрать калькулятор, 
   переключиться на режим runtime, проверить активность кнопки конструктора,
   выполнить верный расчет, переключиться на режим конструктора, разобрать калькулятор`, async ({page, calculator})=>{
-    //const calculator = new Calculator(page);
     const itemsDelete:MovableElementsType[] = ['displayBoxDiv','submitBoxDiv', 'buttonsBoxDiv', 'operationBoxDiv'];
     await expect(calculator.constructorButton.WebElement).toHaveClass(/active/)
     await calculator.addElementsOnCanvas(itemsDelete)
@@ -96,7 +88,7 @@ test.describe('Проверка перемещений', async()=>{
     await calculator.runtimeButton.click();
     await expect(calculator.runtimeButton.WebElement).toHaveClass(/active/)
     await calculator.sidebar.isHidden();
-    await performСalculations(calculator, data, description);
+    await calculator.performСalculations(data, description);
     await calculator.constructorButton.click();
     await calculator.constructorButton.click();
     await expect(calculator.constructorButton.WebElement).toHaveClass(/active/)
@@ -107,8 +99,7 @@ test.describe('Проверка перемещений', async()=>{
   Кейс: Включен режим конструктор,
   Собрать калькулятор, 
   Найти кнопки в полотне (canvasDiv).
-  Прокликать расчет через {force:true}, проверяя после каждого ввода 0 в дисплее`, async({page, calculator})=>{
-    //const calculator = new Calculator(page);
+  Прокликать расчет через {force:true}, проверяя после каждого ввода 0 в дисплее`, async({calculator})=>{
     const itemsDelete:MovableElementsType[] = ['displayBoxDiv','submitBoxDiv', 'buttonsBoxDiv', 'operationBoxDiv'];
     await expect(calculator.constructorButton.WebElement).toHaveClass(/active/)
     await calculator.addElementsOnCanvas(itemsDelete)
@@ -133,8 +124,7 @@ test.describe('Проверка перемещений', async()=>{
   test(`В режиме runtime перетаскивать ничего нельзя 
   Кейс: Собрать калькулятор, 
   переключиться на режим runtime,
-  проверить, что палитра компонентов (sidebar) скрыта `, async({page, calculator})=>{
-    //const calculator = new Calculator(page);
+  проверить, что палитра компонентов (sidebar) скрыта `, async({calculator})=>{
     const itemsDelete:MovableElementsType[] = ['displayBoxDiv','submitBoxDiv', 'buttonsBoxDiv', 'operationBoxDiv'];
     await expect(calculator.constructorButton.WebElement).toHaveClass(/active/)
     await calculator.addElementsOnCanvas(itemsDelete)

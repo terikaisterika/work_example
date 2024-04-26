@@ -3,6 +3,7 @@ import { Page, Locator } from "@playwright/test";
 import { BlockLowercaseElements } from "../elements/block_lowercase_element";
 import { Button } from "../elements/button";
 import { expect } from "@playwright/test";
+import { IDataCalculation } from "../data_tests/data_calculations";
 export interface IButtons {
   [key:string]:Button
 }
@@ -37,6 +38,14 @@ export class Calculator{
     this.runtimeButton = new Button(page, '[data-cy="mode-toggler-runtime"]', 'runtimeButton')
     this.sidebar = new BlockLowercaseElements(page, '[data-cy="sidebar"]', 'sidebar');
     this.lockedContainerInSidebar = new BlockLowercaseElements(page, '[data-cy="locked-drag-container"]', 'lockedContainerInSidebar')
+  }
+  /**
+   * Переход на нужную страницу
+   * @param url дефолтное значение baseUrl+'/' 
+   * при необходимости просто передать оставшуюся часть пути, типа /page
+   */
+  async visit(url = '/'){
+    await this.page.goto(url)
   }
   /**
    * Возвращает объект с кнопками операций 
@@ -140,5 +149,47 @@ export class Calculator{
     }
   }
   
+  /**
+ * Прокликивает нужные кнопки
+ * @param buttonNames содержит данные для выбора кнопок
+ * @param buttons 
+ * @returns 
+ */
+async pressingButtons(buttonNames:string[],buttons:IButtons):Promise<void>{
+  if (buttonNames.length > 0){
+    for (const nameButton of buttonNames){
+      await buttons[nameButton].click()
+    }
+  } else {
+    return;
+  }
+}
+/**
+ * Выполняет расчеты. Вид зависит от операций в caseData
+ * @param caseData строка из DataCalculations
+ * @param description описание теста, нужно для ошибки
+ */
+async performСalculations( caseData:IDataCalculation, description:string):Promise<void>{
+  const buttons = await this.dataEntryButtons();
+  await this.pressingButtons(caseData.firstNumber, buttons)
+  const operationButtons = await this.getOperationButtons();
+  await operationButtons[caseData.firstOperation].click();
+  await this.pressingButtons(caseData.secondNumber, buttons)
+  if (caseData.secondOperation != 'no'){
+    await operationButtons[caseData.secondOperation].click();
+    await this.pressingButtons(caseData.thirdNumber, buttons)
+  }
+  await this.submitBoxDiv.isVisible()
+  await this.submitBoxDiv.click();
+  const textExpected = await this.displayInput.WebElement.textContent();
+  try {
+    await this.displayInput.checkText(caseData.result)
+  } catch (error) {
+    throw new Error(`От тестера. Ожидаемый ${description}.
+    Фактический результат расчета: ${textExpected}.
+    Остальная ошибка: ${error}`)
+  }
+}
+
 
 }
